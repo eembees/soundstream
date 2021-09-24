@@ -36,7 +36,6 @@ class ReaderThread(Thread):
         If the infile exists, read lines and send. Could possibly have added sleep statement here too.
         """
         # first thing is to send an alive signal to the server
-        # self.sock.sendto(encode_message("init"), ADDRESS)
         print(
                     datetime.datetime.now().strftime("%H:%M:%S")
                     + f" - Now sending: init"
@@ -46,23 +45,15 @@ class ReaderThread(Thread):
             print(f"reading {self.file_to_read}")
             with open(self.file_to_read, 'rb') as f:
                 bytes_to_send = f.read()
-                # bytes_to_send = bytearray(f.read())
 
             for bytechunk in chunked(bytes_to_send, 1024):
                 print(
                     datetime.datetime.now().strftime("%H:%M:%S")
                     + f" - Now sending: {bytechunk[:15]}"
                 )
-                # self.sock.sendto(encode_message(bytechunk), ADDRESS)
                 self.sock.sendto(bytes(bytechunk), ADDRESS)
 
 
-            # for line in self.file_to_read.read_text().splitlines(): # TODO: change reading 
-            #     print(
-            #         datetime.datetime.now().strftime("%H:%M:%S")
-            #         + f" - Now sending: {line}"
-            #     )
-            #     self.sock.sendto(encode_message(line), ADDRESS)
 
 
 class WriterThread(Thread):
@@ -123,8 +114,7 @@ class WriterThread(Thread):
             f.setparams(_params)
             f.writeframes(_frames)
             f.writeframes(msg)
-        # with self.file_to_write.open("a") as open_file: # TODO soundfile stuff here save as wav 
-        #     open_file.write(msg)
+
 
 
 def main(infile: Union[Path, None], outfile: Path) -> None:
@@ -163,13 +153,10 @@ def parse_arguments() -> Tuple[Path, Union[Path, None]]:
 if __name__ == "__main__":
     source_infile, sink_infile = parse_arguments()
 
-    # sink_infile = Path("./input/sink.txt")
-    # source_infile = Path("./input/source.txt")
-
     sink_outfile = Path("./output/sink.wav")
     source_outfile = Path("./output/source.wav")
 
-
+    sink_outfile.parent.mkdir(exist_ok=True)
 
     def main_sink():
         main(infile=sink_infile, outfile=sink_outfile)

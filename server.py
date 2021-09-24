@@ -40,7 +40,6 @@ class BroadcastThread(Thread):
         Otherwise, add the message to the broadcast queue.
         :param message: message to be decoded by the decode_message method
         """
-        # msg, addr = decode_message(message)
         msg, addr = message
         if msg == b"init":
             self.clients.add(addr)
@@ -66,11 +65,9 @@ class BroadcastThread(Thread):
         Takes a message as input, retrieves origin address and sends the message
         to all clients except original sender.
         """
-        # msg, addr = decode_message(message)
         msg, addr = message
         for client in self.clients:
             if client != addr:
-                # self.sock.sendto(encode_message(msg), client)
                 self.sock.sendto(msg, client)
                 print(
                     datetime.datetime.now().strftime("%H:%M:%S")
