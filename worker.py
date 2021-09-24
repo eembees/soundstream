@@ -46,7 +46,7 @@ class ReaderThread(Thread):
             with open(self.file_to_read, 'rb') as f:
                 bytes_to_send = f.read()
 
-            for bytechunk in chunked(bytes_to_send, 1024):
+            for bytechunk in chunked(bytes_to_send, BUFFERSIZE):
                 print(
                     datetime.datetime.now().strftime("%H:%M:%S")
                     + f" - Now sending: {bytechunk[:15]}"

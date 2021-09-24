@@ -10,22 +10,12 @@ ADDRESS = (HOST, PORT)
 BUFFERSIZE = 2048
 SLEEPTIME = 0.0001
 
-
-AUDIO_FORMAT_READ = dict(nchannels=1, 
-        sampwidth=2, # remove?
-        framerate=8000,
-        format="RAW",
-        subtype="PCM_16"
-        )
-
-
 AUDIO_FORMAT_WRITE = dict(nchannels=1, 
         sampwidth=2, 
         framerate=8000,
         format="WAV",
         subtype="PCM_16"
         )
-
 
 def decode_message(message: Tuple[bytes, int]) -> Tuple[str, int]:
     """
