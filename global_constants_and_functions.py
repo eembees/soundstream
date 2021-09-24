@@ -7,7 +7,7 @@ import json
 HOST = "localhost"
 PORT = 2205
 ADDRESS = (HOST, PORT)
-BUFFERSIZE = 2048
+BUFFERSIZE = 4096
 SLEEPTIME = 0.0001
 
 AUDIO_FORMAT_WRITE = dict(nchannels=1, 
